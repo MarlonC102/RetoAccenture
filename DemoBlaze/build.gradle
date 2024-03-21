@@ -1,0 +1,48 @@
+defaultTasks 'clean','test'
+apply plugin: 'java'
+apply plugin: 'idea'
+version '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        google()
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.1.3373"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    google()
+}
+
+ext{
+    serenityVersion = "4.1.4"
+    serenityCucumberVersion = "4.1.4"
+}
+
+dependencies {
+    implementation "net.serenity-bdd:serenity-core:$rootProject.ext.serenityVersion"
+    implementation "net.serenity-bdd:serenity-screenplay-webdriver:$rootProject.ext.serenityVersion"
+    implementation "net.serenity-bdd:serenity-junit5:$rootProject.ext.serenityVersion"
+    testImplementation "net.serenity-bdd:serenity-cucumber:$rootProject.ext.serenityCucumberVersion"
+    testImplementation "org.junit.platform:junit-platform-launcher:1.8.2"
+    testImplementation "org.assertj:assertj-core:3.8.0"
+    testImplementation 'org.slf4j:slf4j-simple:2.0.6'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+    testImplementation 'junit:junit:4.13.1'
+}
